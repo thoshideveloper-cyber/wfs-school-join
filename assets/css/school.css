@@ -23,6 +23,14 @@
                                         it never flips with the theme. */
   --wfs-orange:          #FF4B1F;   /* the mark's second colour. Also fixed. */
 
+  /* The clapperboard mark's own two colours. Gold stays fixed in both
+     themes — it's the accent, plenty bright on either background. Navy
+     is not fixed: at this dark a value it nearly disappears into the ink
+     surface, so it lightens a few steps in dark mode purely so the
+     silhouette stays visible. Same logo either way, not a re-colour. */
+  --logo-navy: #182A45;
+  --logo-gold: #F0A93C;
+
   /* Semantic. Reassigned wholesale for the ink surface further down. */
   --surface:  var(--wfs-stock-white);
   --text:     var(--wfs-ink);
@@ -63,6 +71,7 @@
     --line:     var(--wfs-stock-white);
     /* --accent stays the fixed orange from :root — it is the mark's own
        colour, not a UI colour, so it does not flip with the theme. */
+    --logo-navy: #4A6584;   /* lightened only so it reads against near-black */
   }
 }
 
@@ -170,7 +179,7 @@ main { flex: 1; }
   gap: 10px;
   min-height: 44px;
 }
-.mast__mark svg { width: 30px; height: 30px; flex: none; }
+.mast__mark svg { width: 33px; height: 30px; flex: none; }
 .mast__name {
   font-weight: 600;
   font-variation-settings: 'wdth' 100, 'wght' 600;
