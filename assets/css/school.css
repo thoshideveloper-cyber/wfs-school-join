@@ -375,41 +375,68 @@ main { flex: 1; }
   text-align: center;
 }
 
-/* --- 10. The form -------------------------------------------------------
-   Small and on the left, next to what it's for — not a second big button
-   competing with "Open WhatsApp" on the right. A self-contained card, like
-   every other clickable block on this page (.door, .chit) — not text
-   trailing off after a rule with nothing to hold it. The QR chip is paper
-   cream, not stark white, so it reads as this site's own paper stock
-   rather than a hole punched through the dark surface. */
-.about__form {
+/* --- 10. The form --------------------------------------------------------
+   The whole card is one link — not a sentence with a few words underlined
+   inside it. Same grammar as .door: a small mono meta line, a bold title,
+   an arrow cue that shifts on hover. That's what already reads as "this
+   goes somewhere" everywhere else on this page, so reuse it instead of
+   inventing a second way to say the same thing. */
+.formcard {
   display: flex;
-  gap: var(--s4);
   align-items: center;
+  gap: var(--s4);
   margin-top: var(--s5);
   padding: var(--s4);
-  border: var(--rule-hair) solid var(--line);
+  border: var(--rule-hair) solid var(--wfs-ink-40);
+  color: var(--text);
+  transition: border-color var(--dur-ui) var(--ease-cut);
 }
-.about__form-qr {
+.formcard:hover,
+.formcard:focus-visible { border-color: var(--accent); }
+
+.formcard__qr {
   flex: none;
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   padding: 4px;
   border: var(--rule-hair) solid var(--wfs-ink-40);
   background: var(--wfs-stock-white);
   color: var(--wfs-ink);
 }
-.about__form-qr svg { width: 100%; height: 100%; display: block; }
-.about__form-text {
-  font-size: 14px;
-  line-height: 1.45;
+.formcard__qr svg { width: 100%; height: 100%; display: block; }
+
+.formcard__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.formcard__meta {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
   color: var(--text-dim);
 }
-.about__form-text a {
+.formcard__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-variation-settings: 'wdth' 106, 'wght' 800;
+  letter-spacing: -0.015em;
+  font-size: 18px;
   color: var(--text);
-  font-weight: 700;
-  border-bottom: var(--rule-hair) solid var(--accent);
 }
+
+.formcard__cue {
+  flex: none;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--accent);
+  transition: transform var(--dur-ui) var(--ease-cut);
+}
+.formcard:hover .formcard__cue,
+.formcard:focus-visible .formcard__cue { transform: translateX(3px); }
 
 /* --- 11. Go --------------------------------------------------------------
    Always green, always "this opens WhatsApp" — the one colour on this page
