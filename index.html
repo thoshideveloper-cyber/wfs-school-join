@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Join The Weekend Film School, Hyderabad</title>
-<meta name="description" content="The WhatsApp community for The Weekend Film School, Hyderabad. Scan the code or tap to join — classes, screenings and the weekend schedule.">
+<title>Join The Weekend Film School — learn or teach a craft, Hyderabad</title>
+<meta name="description" content="Learn a craft or teach one — pick your path into The Weekend Film School community, Hyderabad. Scan the code, or tap to join.">
 <meta name="robots" content="index, follow">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="The Weekend Film School">
-<meta property="og:title" content="Join The Weekend Film School, Hyderabad">
-<meta property="og:description" content="Every weekend, somebody learns a craft and somebody teaches one. Scan the code or tap to join the community.">
+<meta property="og:title" content="Join The Weekend Film School — learn or teach a craft">
+<meta property="og:description" content="Every Saturday, somebody teaches and somebody learns. Decide which one you are, then scan or tap to join.">
 <meta property="og:image" content="assets/img/favicon-512.png">
 <meta name="twitter:card" content="summary">
 
@@ -27,7 +27,7 @@
 </head>
 
 <body>
-<a class="skip" href="#join">Skip to the join code</a>
+<a class="skip" href="#fork">Skip to the choice</a>
 
 <!-- Paper grain. Fixed and non-interactive so it never repaints on scroll. -->
 <div class="grain" aria-hidden="true"></div>
@@ -64,57 +64,99 @@
   <main id="main" tabindex="-1">
 
     <div class="lede stagger" style="--i:0">
-      <h1 class="lede__h">Two days<br>a week.</h1>
-      <p class="lede__sub">Every weekend, somebody learns a craft and somebody teaches one. This is the WhatsApp community where that gets arranged — the schedule, the screenings, and the people who turn up.</p>
+      <h1 class="lede__h">One weekend.<br>Two ways in.</h1>
+      <p class="lede__sub">Every Saturday, somebody teaches and somebody learns. Decide which one you are.</p>
     </div>
 
-    <div class="split">
+    <!-- ==================================================== THE FORK -->
+    <!-- Both doors stay on screen even after a pick, so switching later is
+         one tap, not a back button. The picked one gets a thicker rule and
+         a small "your pick" tag; the other just steps back slightly. -->
+    <nav class="doors stagger" id="fork" style="--i:1" aria-label="Choose a path">
+      <button class="door door--blue" type="button" data-path="learn" aria-pressed="false">
+        <span class="door__doc">Path one</span>
+        <span class="door__title">Learn a craft</span>
+        <span class="door__blurb">Pick a craft and we build the Saturday around it. Two minutes. Nothing to pay.</span>
+        <span class="door__cue" aria-hidden="true">&rarr;</span>
+      </button>
+      <button class="door door--green" type="button" data-path="teach" aria-pressed="false">
+        <span class="door__doc">Path two</span>
+        <span class="door__title">Teach a craft</span>
+        <span class="door__blurb">Tell us what you do and we fill the room. Three minutes. We reply either way.</span>
+        <span class="door__cue" aria-hidden="true">&rarr;</span>
+      </button>
+    </nav>
+    <p class="fork__hint stagger" id="fork-hint" style="--i:2">Tap one. You can switch any time.</p>
 
-      <!-- ==================================================== THE JOIN CHIT -->
-      <section class="chit stagger" id="join" style="--i:1" aria-labelledby="join-h">
-        <p class="chit__doc">Community &middot; Hyderabad</p>
-        <h2 class="chit__title" id="join-h">The Weekend<br>Film School</h2>
+    <!-- ==================================================== LEARN PATH -->
+    <section class="path" id="path-learn" data-path="learn" aria-labelledby="learn-h" hidden>
+      <div class="split">
 
-        <div class="qr" id="qr">
-          <div class="qr__code" id="qr-code"></div>
-          <p class="qr__cap">Scan from another phone or a laptop</p>
+        <div class="chit chit--blue" data-role="chit">
+          <p class="chit__doc">Community &middot; Hyderabad</p>
+          <h2 class="chit__title" id="learn-h">The Weekend<br>Film School</h2>
+
+          <div class="qr" data-role="qr">
+            <div class="qr__code" data-role="qr-code"></div>
+            <p class="qr__cap">Scan from another phone or a laptop</p>
+          </div>
+
+          <a class="go" data-role="go" href="https://chat.whatsapp.com/GbTJUZzTQF5Fo7aFQytjQA" target="_blank" rel="noopener">Open WhatsApp</a>
+          <button class="chit__copy" data-role="copy" type="button">Copy the link</button>
+          <!-- Shown only if the clipboard is refused, so there is always a
+               way to get the link out of the page by hand. -->
+          <p class="chit__url" data-role="url" hidden><span class="u-hidden">The link: </span><span data-role="url-text"></span></p>
+          <p class="chit__note"><span class="ast" aria-hidden="true">*</span>Free to join. Leave whenever you like.</p>
         </div>
 
-        <a class="go" id="go" href="https://chat.whatsapp.com/GbTJUZzTQF5Fo7aFQytjQA" target="_blank" rel="noopener">Open WhatsApp</a>
-        <button class="chit__copy" id="copy" type="button">Copy the link</button>
-        <!-- Shown only if the clipboard is refused, so there is always a way
-             to get the link out of the page by hand. -->
-        <p class="chit__url" id="url" hidden><span class="u-hidden">The link: </span><span id="url-text"></span></p>
-        <p class="chit__note"><span class="ast" aria-hidden="true">*</span>Free to join. Leave whenever you like.</p>
-      </section>
+        <div class="about">
+          <h3 class="about__h">What you get</h3>
+          <ol class="steps">
+            <li class="step"><span class="step__n">1</span><span class="step__t">Taught by somebody who does this for a living, in a room of twenty-plus.</span></li>
+            <li class="step"><span class="step__n">2</span><span class="step__t">Something you made, in your hands, by the end of the day.</span></li>
+            <li class="step"><span class="step__n">3</span><span class="step__t">Twenty-plus strangers who came anyway. Most leave with a group.</span></li>
+            <li class="step"><span class="step__n">4</span><span class="step__t">No experience, no gear, no contacts needed. That's the whole point.</span></li>
+          </ol>
+          <p class="about__fine">Want to make things instead of just watch? There is a <a href="https://thoshideveloper-cyber.github.io/wfs-join/" rel="noopener">crew list</a> sorted by speciality.</p>
+        </div>
 
-      <!-- ======================================================= WHAT IT IS -->
-      <section class="about stagger" style="--i:2" aria-labelledby="about-h">
-        <h2 class="about__h" id="about-h">What you are joining</h2>
+      </div>
+    </section>
 
-        <dl class="rows">
-          <div class="row">
-            <dt class="row__k">The schedule</dt>
-            <dd class="row__v">What is running this Saturday and Sunday, posted before the weekend so you can plan around it.</dd>
-          </div>
-          <div class="row">
-            <dt class="row__k">Classes</dt>
-            <dd class="row__v">Somebody who does the thing teaches the thing. Writing, camera, edit, sound, performance — whatever is on that week.</dd>
-          </div>
-          <div class="row">
-            <dt class="row__k">Screenings</dt>
-            <dd class="row__v">What the room made, watched together, argued about afterwards.</dd>
-          </div>
-          <div class="row">
-            <dt class="row__k">The people</dt>
-            <dd class="row__v">Actors, directors, writers, editors, camera, music, comedy, dance. Turn up with an idea and find who can shoot it.</dd>
-          </div>
-        </dl>
+    <!-- ==================================================== TEACH PATH -->
+    <section class="path" id="path-teach" data-path="teach" aria-labelledby="teach-h" hidden>
+      <div class="split">
 
-        <p class="about__fine">No experience needed and nothing to bring. If you would rather join by what you make, there is a <a href="https://thoshideveloper-cyber.github.io/wfs-join/" rel="noopener">crew list</a> for that.</p>
-      </section>
+        <div class="chit chit--green" data-role="chit">
+          <p class="chit__doc">Community &middot; Hyderabad</p>
+          <h2 class="chit__title" id="teach-h">The Weekend<br>Film Crew</h2>
 
-    </div>
+          <div class="qr" data-role="qr">
+            <div class="qr__code" data-role="qr-code"></div>
+            <p class="qr__cap">Scan from another phone or a laptop</p>
+          </div>
+
+          <a class="go" data-role="go" href="https://chat.whatsapp.com/KXw6v5TYQWSKHg8swjQQoO" target="_blank" rel="noopener">Open WhatsApp</a>
+          <button class="chit__copy" data-role="copy" type="button">Copy the link</button>
+          <p class="chit__url" data-role="url" hidden><span class="u-hidden">The link: </span><span data-role="url-text"></span></p>
+          <p class="chit__note"><span class="ast" aria-hidden="true">*</span>Free to join. We reply either way.</p>
+        </div>
+
+        <div class="about">
+          <h3 class="about__h">What we handle</h3>
+          <ol class="steps">
+            <li class="step"><span class="step__n">1</span><span class="step__t">The room. Booked and ready before you arrive.</span></li>
+            <li class="step"><span class="step__n">2</span><span class="step__t">The audience. You tell us your craft, we fill the seats.</span></li>
+            <li class="step"><span class="step__n">3</span><span class="step__t">The money. Registrations and refunds are ours to handle; your share gets worked out with you first.</span></li>
+            <li class="step"><span class="step__n">4</span><span class="step__t">A coordinator on the day, so all you do is teach.</span></li>
+            <li class="step"><span class="step__n">5</span><span class="step__t">Every clip we film of you teaching, sent over, free to use.</span></li>
+          </ol>
+          <p class="about__fine">No CV, no interview. If you can teach it, we want to hear from you.</p>
+        </div>
+
+      </div>
+    </section>
+
   </main>
 
   <footer class="foot">

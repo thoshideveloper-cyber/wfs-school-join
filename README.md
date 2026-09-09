@@ -1,30 +1,56 @@
 # Join The Weekend Film School
 
-A single page whose only job is to get one person into one WhatsApp community.
-Scan the code, or tap the button. Nothing else on it.
+A single page whose only job is to ask one question — learn or teach — and
+get the answer into the right WhatsApp community. Scan a code, or tap a
+button. Nothing else on it.
 
 This is the page you put behind the link in a bio, a poster, a story or a
 video description.
 
-- Sends people to: **The Weekend Film School** community
+- **Learn a craft** sends people to **The Weekend Film School** community.
+- **Teach a craft** sends people to **The Weekend Film Crew** community.
+- Both doors stay on screen after a pick, so switching later is one tap.
 - Sibling page: [`wfs-join`](../wfs-join) — the three-door gateway with the
-  full crew list. This page does not touch it and does not replace it.
+  full crew list, sorted by speciality. This page does not touch it and does
+  not replace it; the learn panel links out to it for anyone who would rather
+  join by what they make.
 
-## The one thing you edit
+## The two things you edit
 
-Open `assets/js/school.js`. The first line of real code is the link:
+Open `assets/js/school.js`. Near the top:
 
 ```js
-var JOIN_LINK = 'https://chat.whatsapp.com/GbTJUZzTQF5Fo7aFQytjQA';
+var LINKS = {
+  learn: 'https://chat.whatsapp.com/GbTJUZzTQF5Fo7aFQytjQA',   // The Weekend Film School
+  teach: 'https://chat.whatsapp.com/KXw6v5TYQWSKHg8swjQQoO'    // The Weekend Film Crew
+};
 ```
 
-Replace it and save. The button and the QR code both update — the code is
-drawn in the browser from that same string, so the two can never drift apart.
-Nothing to re-export, no image to regenerate.
+Replace either line and save. That path's button and QR code both update —
+the code is drawn in the browser from the same string the button points at,
+so the two can never drift apart. Nothing to re-export, no image to
+regenerate.
 
-The same URL is also hard-coded into the button's `href` in `index.html` as a
-fallback, so the page still works with JavaScript off. **If you change one,
-change the other.**
+Both URLs are also hard-coded into each door's button `href` in `index.html`
+as a fallback, so the page still sends people somewhere with JavaScript
+switched off — it just cannot ask which door they want first. **If you change
+a link in one file, change it in the other.**
+
+## How the routing works
+
+- First visit, no history: both doors sit open. Nothing is decided until
+  somebody taps one.
+- Tap a door: that path's panel appears below (QR, button, what-you-get
+  list), the door gets a heavier rule and a "your pick" tag, the other door
+  just steps back slightly — it never disappears, so changing your mind is
+  one more tap.
+- The choice is written into the address bar as `?path=learn` or
+  `?path=teach` and remembered in this browser for next time. A printed QR
+  code can point straight at either URL and skip the question entirely, for
+  anyone who already knows which one they want.
+- The query string always wins over a remembered choice, so a link shared
+  with `?path=teach` behaves the same for everyone who opens it, regardless
+  of what they picked here before.
 
 ## How it is built
 
@@ -33,34 +59,35 @@ no framework. Open `index.html` and it runs.
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The page. All the copy lives here. |
-| `assets/css/school.css` | The stylesheet. Tokens at the top are copied verbatim from `wfs-join/assets/css/gateway.css`. |
+| `index.html` | The page. Both doors and both panels, all the copy. |
+| `assets/css/school.css` | The stylesheet. Tokens and the door component are copied verbatim from `wfs-join/assets/css/gateway.css`. |
 | `assets/js/qr.js` | Dependency-free QR encoder, copied from the gateway. Do not edit. |
-| `assets/js/school.js` | The link, and the twenty lines that use it. |
+| `assets/js/school.js` | The two links, the routing, and the copy-to-clipboard fallback — wired once per panel so switching paths never redraws anything. |
 
 The identity is the same production-paperwork language as the gateway: paper
 stocks, mono labels, hairline rules, zero radius, zero shadow, zero gradient.
-The join card is printed on blue stock because blue is this community's stock
-in the gateway's config.
+Each join card is printed on the same stock as its door — blue for the School,
+green for the Crew — matching the colour-coding already used in the gateway's
+own config.
 
 ## Deploying it
 
-Any static host. For GitHub Pages, the same way `wfs-join` is served:
+Already live at **https://thoshideveloper-cyber.github.io/wfs-school-join/**
+via GitHub Pages, deployed from the `main` branch at root.
+
+To push a change:
 
 ```bash
 cd wfs-school-join
-git init
 git add .
-git commit -m "Join sheet for The Weekend Film School"
-git branch -M main
-git remote add origin https://github.com/<you>/wfs-school-join.git
-git push -u origin main
+git commit -m "Describe the change"
+git push
 ```
 
-Then in the repo: **Settings → Pages → Source: deploy from branch → `main` /
-(root)**. It goes live at `https://<you>.github.io/wfs-school-join/`.
+Pages redeploys automatically within a minute or two of the push.
 
 ## What it does not say
 
-No member count, no dates, no price, no testimonials, no venue address. None
-of that is verified, so none of it is on the page. Same rule as the main site.
+No member count, no dates, no price, no testimonials, no venue address, no
+CV requirement for teaching. None of that is verified or true yet, so none of
+it is on the page. Same rule as the main site.

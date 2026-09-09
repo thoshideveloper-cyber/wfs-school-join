@@ -214,7 +214,87 @@ main { flex: 1; }
   color: var(--text-dim);
 }
 
-/* --- 6. Two columns ----------------------------------------------------- */
+/* --- 6. The fork --------------------------------------------------------
+   Two doors, lifted from wfs-join/assets/css/gateway.css. There, they lead
+   to three different communities; here, to two paths into the same one.
+   Both stay clickable after a pick, so switching later costs one tap. */
+.doors {
+  margin-top: var(--s7);
+  display: grid;
+  gap: var(--s3);
+}
+@media (min-width: 620px) { .doors { grid-template-columns: 1fr 1fr; } }
+
+.door {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: var(--s3);
+  width: 100%;
+  min-height: clamp(176px, 27vh, 240px);
+  padding: clamp(16px, 3.4vw, 28px);
+  border: var(--rule-hair) solid var(--wfs-ink);
+  color: var(--wfs-ink);
+  text-align: left;
+  transition: transform var(--dur-tap) var(--ease-cut),
+              border-width var(--dur-ui) var(--ease-cut),
+              opacity var(--dur-ui) var(--ease-cut);
+}
+.door:active { transform: scale(0.99); }
+
+.door--blue  { background: var(--wfs-stock-blue); }
+.door--green { background: var(--wfs-stock-green); }
+
+.door__doc {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--wfs-ink-70);
+}
+.door__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-variation-settings: 'wdth' 112, 'wght' 900;
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+  font-size: clamp(28px, 6.4vw, 40px);
+}
+.door__blurb {
+  align-self: end;
+  max-width: 36ch;
+  padding-right: 40px;
+  color: var(--wfs-ink-70);
+  font-size: 14.5px;
+  line-height: 1.35;
+}
+.door__cue {
+  position: absolute;
+  right: clamp(16px, 3.4vw, 28px);
+  bottom: clamp(14px, 3vw, 24px);
+  font-size: 24px;
+  line-height: 1;
+}
+
+/* The chosen door gets a heavier rule and a "your pick" tag appended to its
+   doc line; the other steps back slightly rather than disappearing, so
+   switching stays one visible tap away. */
+.door[aria-pressed="true"] { border-width: var(--rule-heavy); }
+.door[aria-pressed="true"] .door__doc::after { content: " \00b7 your pick"; }
+#fork[data-chosen] .door[aria-pressed="false"] { opacity: 0.7; }
+
+.fork__hint {
+  margin-top: var(--s3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+/* --- 7. Two columns ----------------------------------------------------- */
 /* The chit leads on a phone, because a phone can tap it. On a laptop the
    two sit side by side and the chit holds the right-hand column. */
 .split {
@@ -232,14 +312,16 @@ main { flex: 1; }
   .about { order: 1; }
 }
 
-/* --- 7. The chit -------------------------------------------------------- */
-/* Blue stock, the same sheet the gateway hands out for this community. */
+/* --- 8. The chit --------------------------------------------------------
+   Same stock colour as its door: blue to learn, green to teach. Matches the
+   gateway's own colour-coding for these two communities. */
 .chit {
   padding: var(--s5);
   border: var(--rule-hair) solid var(--wfs-ink);
-  background: var(--wfs-stock-blue);
   color: var(--wfs-ink);
 }
+.chit--blue  { background: var(--wfs-stock-blue); }
+.chit--green { background: var(--wfs-stock-green); }
 .chit__doc {
   font-family: var(--font-mono);
   font-weight: 500;
@@ -258,7 +340,7 @@ main { flex: 1; }
   font-size: clamp(29px, 7.4vw, 38px);
 }
 
-/* --- 8. The code -------------------------------------------------------- */
+/* --- 9. The code -------------------------------------------------------- */
 .qr {
   display: grid;
   justify-items: center;
@@ -291,7 +373,7 @@ main { flex: 1; }
   text-align: center;
 }
 
-/* --- 9. Go -------------------------------------------------------------- */
+/* --- 10. Go ------------------------------------------------------------- */
 .go {
   display: flex;
   align-items: center;
@@ -352,7 +434,9 @@ main { flex: 1; }
 }
 .ast { margin-right: 6px; font-weight: 700; }
 
-/* --- 10. What you are joining ------------------------------------------- */
+/* --- 11. What you get / what we handle ----------------------------------
+   A short numbered list per path — the poster's numbered points, without
+   the poster's density. Squares, not circles: zero radius stays the rule. */
 .about__h {
   font-family: var(--font-mono);
   font-weight: 500;
@@ -363,25 +447,31 @@ main { flex: 1; }
   padding-bottom: var(--s3);
   border-bottom: var(--rule-hair) solid var(--line);
 }
-.rows { display: grid; }
-.row {
+.steps {
   display: grid;
-  gap: var(--s1) var(--s5);
-  padding: var(--s4) 0;
-  border-bottom: var(--rule-hair) solid var(--line);
+  gap: var(--s4);
+  margin-top: var(--s4);
+  list-style: none;
 }
-@media (min-width: 620px) {
-  .row { grid-template-columns: 13ch 1fr; align-items: baseline; }
+.step {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: var(--s3);
 }
-.row__k {
+.step__n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  border: var(--rule-hair) solid var(--wfs-ink-40);
   font-family: var(--font-mono);
-  font-weight: 500;
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.13em;
+  font-weight: 600;
   color: var(--text-dim);
 }
-.row__v { font-size: 16px; line-height: 1.42; }
+.step__t { font-size: 15.5px; line-height: 1.42; }
 
 .about__fine {
   margin-top: var(--s5);
@@ -395,7 +485,7 @@ main { flex: 1; }
   border-bottom: var(--rule-hair) solid var(--accent);
 }
 
-/* --- 11. Footer --------------------------------------------------------- */
+/* --- 12. Footer --------------------------------------------------------- */
 .foot {
   display: flex;
   flex-wrap: wrap;
