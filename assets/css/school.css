@@ -1,0 +1,425 @@
+/* ==========================================================================
+   THE WEEKEND FILM SCHOOL — COMMUNITY JOIN SHEET
+   One stylesheet. No build step.
+
+   Same paperwork identity as the gateway at /wfs-join/, reduced to a single
+   errand: one community, one code, one button. The tokens block below is
+   lifted verbatim from gateway.css so this page can be deployed on its own.
+   If that file changes, change this block to match.
+   ========================================================================== */
+
+/* --- 1. Tokens ---------------------------------------------------------- */
+:root {
+  /* Paper stocks, in the WGA script-revision order. */
+  --wfs-ink:             #14161A;
+  --wfs-ink-70:          #4A4E56;
+  --wfs-ink-40:          #8A9099;
+  --wfs-stock-white:     #EAE6DC;
+  --wfs-stock-blue:      #C3D6E8;
+  --wfs-stock-green:     #C6DEC6;
+  --wfs-stock-goldenrod: #EFD27A;
+  --wfs-stock-cherry:    #E9AEB2;
+  --wfs-green:           #17693F;   /* the green light, on paper only */
+  --wfs-green-hi:        #3FBF77;   /* on ink surfaces only */
+
+  /* Semantic. Reassigned wholesale for the ink surface further down. */
+  --surface:  var(--wfs-stock-white);
+  --text:     var(--wfs-ink);
+  --text-dim: var(--wfs-ink-70);
+  --line:     var(--wfs-ink);
+  --accent:   var(--wfs-green);
+
+  --font-display: "Archivo", "Segoe UI", system-ui, sans-serif;
+  --font-body:    "Archivo", "Segoe UI", system-ui, sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, "Cascadia Mono", Menlo, monospace;
+
+  /* Rules, not shadows. Zero radius, zero shadow, zero gradient. */
+  --rule-hair:  2px;
+  --rule-mid:   3px;
+  --rule-heavy: 6px;
+
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px;
+  --s6:32px; --s7:48px; --s8:64px; --s9:88px;
+
+  --ease-cut: cubic-bezier(0.2, 0, 0, 1);
+  --dur-tap:    120ms;
+  --dur-ui:     200ms;
+  --dur-reveal: 320ms;
+
+  --pad: clamp(10px, 2.4vw, 22px);
+  --shell: 1180px;
+
+  color-scheme: light dark;
+}
+
+/* The ink surface. Only the page chrome flips: the coloured panels stay
+   paper, because they are paper. Slips on a desk, in either light. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface:  var(--wfs-ink);
+    --text:     var(--wfs-stock-white);
+    --text-dim: var(--wfs-ink-40);
+    --line:     var(--wfs-stock-white);
+    --accent:   var(--wfs-green-hi);
+  }
+}
+
+/* --- 2. Reset ----------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  min-height: 100dvh;
+  padding: var(--pad);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.28;
+  letter-spacing: -0.012em;
+  font-variation-settings: 'wdth' 100;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+svg { display: block; }
+[hidden] { display: none !important; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+:focus-visible {
+  outline: var(--rule-mid) solid var(--accent);
+  outline-offset: 3px;
+}
+
+::selection { background: var(--accent); color: var(--surface); }
+
+.skip {
+  position: absolute;
+  top: -100px; left: var(--pad);
+  z-index: 80;
+  padding: 10px 14px;
+  background: var(--wfs-ink);
+  color: var(--wfs-stock-white);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+}
+.skip:focus { top: calc(var(--pad) + 4px); }
+
+.u-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Paper grain. Fixed and non-interactive, so it never repaints on scroll. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.055;
+  background-size: 200px 200px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes view-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+.stagger {
+  animation: view-in 300ms var(--ease-cut) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .stagger { animation: none; }
+  *, *::before, *::after { transition-duration: 1ms !important; }
+}
+
+/* --- 3. The sheet ------------------------------------------------------- */
+.sheet {
+  max-width: var(--shell);
+  margin: 0 auto;
+  min-height: calc(100dvh - var(--pad) * 2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s6);
+}
+main { flex: 1; }
+
+/* --- 4. Masthead -------------------------------------------------------- */
+.mast {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  padding-bottom: var(--s4);
+  border-bottom: var(--rule-hair) solid var(--line);
+}
+.mast__mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+}
+.mast__mark svg { width: 30px; height: 30px; flex: none; }
+.mast__name {
+  font-weight: 600;
+  font-variation-settings: 'wdth' 100, 'wght' 600;
+  font-size: clamp(13px, 3.4vw, 15px);
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+.mast__doc {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--text-dim);
+  padding-left: var(--s3);
+  border-left: var(--rule-hair) solid var(--line);
+  margin-left: auto;
+}
+.mast__serial {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--text-dim);
+}
+/* The serial is a nicety, not information. First thing to go on a phone. */
+@media (max-width: 560px) { .mast__serial { display: none; } }
+
+/* --- 5. Lede ------------------------------------------------------------ */
+.lede__h {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-variation-settings: 'wdth' 112, 'wght' 900;
+  letter-spacing: -0.04em;
+  line-height: 0.86;
+  font-size: clamp(52px, 13vw, 104px);
+}
+.lede__sub {
+  margin-top: var(--s4);
+  max-width: 46ch;
+  font-size: clamp(15.5px, 3.6vw, 17.5px);
+  line-height: 1.42;
+  color: var(--text-dim);
+}
+
+/* --- 6. Two columns ----------------------------------------------------- */
+/* The chit leads on a phone, because a phone can tap it. On a laptop the
+   two sit side by side and the chit holds the right-hand column. */
+.split {
+  margin-top: var(--s7);
+  display: grid;
+  gap: var(--s6);
+}
+@media (min-width: 860px) {
+  .split {
+    grid-template-columns: 1fr minmax(340px, 400px);
+    gap: var(--s8);
+    align-items: start;
+  }
+  .chit  { order: 2; position: sticky; top: var(--pad); }
+  .about { order: 1; }
+}
+
+/* --- 7. The chit -------------------------------------------------------- */
+/* Blue stock, the same sheet the gateway hands out for this community. */
+.chit {
+  padding: var(--s5);
+  border: var(--rule-hair) solid var(--wfs-ink);
+  background: var(--wfs-stock-blue);
+  color: var(--wfs-ink);
+}
+.chit__doc {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--wfs-ink-70);
+}
+.chit__title {
+  margin-top: var(--s3);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-variation-settings: 'wdth' 112, 'wght' 900;
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+  font-size: clamp(29px, 7.4vw, 38px);
+}
+
+/* --- 8. The code -------------------------------------------------------- */
+.qr {
+  display: grid;
+  justify-items: center;
+  gap: var(--s3);
+  margin-top: var(--s5);
+  padding-top: var(--s5);
+  border-top: var(--rule-hair) solid var(--wfs-ink);
+}
+.qr__code {
+  width: min(232px, 62vw);
+  padding: 11px;
+  border: var(--rule-hair) solid var(--wfs-ink);
+  background: #ffffff;
+  color: var(--wfs-ink);
+}
+.qr__code svg {
+  width: 100%;
+  height: auto;
+  /* Feeds out like paper from a printer once the sheet has settled. */
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path var(--dur-reveal) var(--ease-cut);
+}
+.qr[data-revealed] .qr__code svg { clip-path: inset(0 0 0 0); }
+.qr__cap {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--wfs-ink-70);
+  text-align: center;
+}
+
+/* --- 9. Go -------------------------------------------------------------- */
+.go {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  margin-top: var(--s5);
+  padding: var(--s3) var(--s5);
+  border: var(--rule-hair) solid var(--wfs-ink);
+  background: var(--wfs-green);
+  color: var(--wfs-stock-white);
+  font-weight: 700;
+  font-variation-settings: 'wdth' 100, 'wght' 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  text-align: center;
+  transition: transform var(--dur-tap) var(--ease-cut);
+}
+.go:active { transform: scale(0.98); }
+
+.chit__copy {
+  display: block;
+  min-height: 44px;
+  margin: var(--s3) auto 0;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--wfs-ink-70);
+  border-bottom: var(--rule-hair) solid var(--wfs-ink-70);
+  transition: color var(--dur-ui) var(--ease-cut), border-color var(--dur-ui) var(--ease-cut);
+}
+.chit__copy:hover { color: var(--wfs-ink); border-color: var(--wfs-ink); }
+
+/* Only ever shown when the clipboard was refused. Mono, so it reads as a
+   value to be copied rather than as a sentence. */
+.chit__url {
+  margin-top: var(--s3);
+  padding: var(--s2) var(--s3);
+  border: var(--rule-hair) solid var(--wfs-ink-40);
+  background: var(--wfs-stock-white);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--wfs-ink);
+  text-align: center;
+  word-break: break-all;
+  user-select: all;
+}
+
+.chit__note {
+  margin-top: var(--s5);
+  padding-top: var(--s4);
+  border-top: var(--rule-hair) solid var(--wfs-ink-40);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--wfs-ink-70);
+}
+.ast { margin-right: 6px; font-weight: 700; }
+
+/* --- 10. What you are joining ------------------------------------------- */
+.about__h {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--text-dim);
+  padding-bottom: var(--s3);
+  border-bottom: var(--rule-hair) solid var(--line);
+}
+.rows { display: grid; }
+.row {
+  display: grid;
+  gap: var(--s1) var(--s5);
+  padding: var(--s4) 0;
+  border-bottom: var(--rule-hair) solid var(--line);
+}
+@media (min-width: 620px) {
+  .row { grid-template-columns: 13ch 1fr; align-items: baseline; }
+}
+.row__k {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--text-dim);
+}
+.row__v { font-size: 16px; line-height: 1.42; }
+
+.about__fine {
+  margin-top: var(--s5);
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--text-dim);
+  max-width: 52ch;
+}
+.about__fine a {
+  color: var(--text);
+  border-bottom: var(--rule-hair) solid var(--accent);
+}
+
+/* --- 11. Footer --------------------------------------------------------- */
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s3) var(--s5);
+  padding-top: var(--s4);
+  border-top: var(--rule-hair) solid var(--line);
+}
+.foot__line,
+.foot__nav a {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--text-dim);
+}
+.foot__nav { display: flex; flex-wrap: wrap; gap: var(--s4); }
+@media (min-width: 620px) { .foot__nav { gap: var(--s5); } }
+.foot__nav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  border-bottom: var(--rule-hair) solid transparent;
+  transition: color var(--dur-ui) var(--ease-cut), border-color var(--dur-ui) var(--ease-cut);
+}
+.foot__nav a:hover { color: var(--text); border-color: var(--accent); }
