@@ -47,8 +47,6 @@ var QR_ECC = 'M';
 (function () {
   'use strict';
 
-  var STORE_KEY = 'wfs-school-join:path';
-
   var fork  = document.getElementById('fork');
   var hint  = document.getElementById('fork-hint');
   var doors = Array.prototype.slice.call(document.querySelectorAll('.door[data-path]'));
@@ -176,8 +174,6 @@ var QR_ECC = 'M';
     if (fork) fork.setAttribute('data-chosen', path);
     if (hint) hint.hidden = true;
 
-    try { localStorage.setItem(STORE_KEY, path); } catch (err) { /* private mode, ignore */ }
-
     /* So the choice survives a refresh or a paste into a chat — the QR on
        a printed poster can point straight at ?path=teach and skip the ask
        entirely for someone who already knows which door they want. */
@@ -206,20 +202,19 @@ var QR_ECC = 'M';
     });
   });
 
-  /* --- On arrival: a query string wins — that is what a printed QR or a
-         shared link would carry — then whatever this browser picked last
-         time. Neither present, and both doors stay open, nothing decided
-         for them yet. -------------------------------------------------- */
+  /* --- On arrival: only an explicit ?path= in the URL skips the question —
+         that is what a printed QR or a shared link deliberately carries. A
+         bare visit to the plain address always asks first, every time, no
+         matter what was clicked here on a previous visit. Nothing is
+         remembered between visits on purpose: this link gets shared and
+         reopened by many different people on the same phone or browser,
+         and each of them should see the same question, not whatever the
+         last person happened to pick. ------------------------------------ */
   var params = null;
   try { params = new URLSearchParams(window.location.search); } catch (err) { /* ignore */ }
   var fromQuery = params ? params.get('path') : null;
 
-  var fromStore = null;
-  try { fromStore = localStorage.getItem(STORE_KEY); } catch (err) { /* private mode, ignore */ }
+  var initial = (fromQuery === 'learn' || fromQuery === 'teach') ? fromQuery : null;
 
-  var initial = (fromQuery === 'learn' || fromQuery === 'teach') ? fromQuery
-              : (fromStore === 'learn' || fromStore === 'teach') ? fromStore
-              : null;
-
-  if (initial) showPath(initial, { skipFocus: true, skipHistory: fromQuery === initial });
+  if (initial) showPath(initial, { skipFocus: true, skipHistory: true });
 })();

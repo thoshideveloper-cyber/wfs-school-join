@@ -38,19 +38,20 @@ a link in one file, change it in the other.**
 
 ## How the routing works
 
-- First visit, no history: both doors sit open. Nothing is decided until
-  somebody taps one.
+- The plain address always asks first. Both doors sit open, nothing
+  decided, every single time somebody opens it — this is a link that gets
+  shared and reopened by lots of different people on the same phone or
+  browser, so nothing about a previous visit is remembered. There is no
+  "last choice" stored anywhere.
 - Tap a door: that path's panel appears below (QR, button, what-you-get
   list), the door gets a heavier rule and a "your pick" tag, the other door
   just steps back slightly — it never disappears, so changing your mind is
   one more tap.
-- The choice is written into the address bar as `?path=learn` or
-  `?path=teach` and remembered in this browser for next time. A printed QR
-  code can point straight at either URL and skip the question entirely, for
-  anyone who already knows which one they want.
-- The query string always wins over a remembered choice, so a link shared
-  with `?path=teach` behaves the same for everyone who opens it, regardless
-  of what they picked here before.
+- Tapping a door also writes `?path=learn` or `?path=teach` into the
+  address bar, purely so the current tab can be refreshed or the exact URL
+  copied and shared as a direct link. A printed QR code can point straight
+  at either URL and skip the question entirely, for anyone who already
+  knows which one they want — that is the only thing that skips the fork.
 
 ## How it is built
 
