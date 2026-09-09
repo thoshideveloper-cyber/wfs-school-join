@@ -376,46 +376,36 @@ main { flex: 1; }
 }
 
 /* --- 10. The form -------------------------------------------------------
-   The actual intake — what the door's blurb text ("we build the weekend
-   around it" / "we fill the room") is describing. Orange, not green: green
-   stays reserved for "this opens WhatsApp" everywhere else on the page. */
-.cta {
+   Small and on the left, next to what it's for — not a second big button
+   competing with "Open WhatsApp" on the right. A quiet link with a thumbnail
+   QR beside it, the same size order as a business-card code. */
+.about__form {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 54px;
-  margin-top: var(--s5);
-  padding: var(--s3) var(--s5);
-  border: var(--rule-hair) solid var(--wfs-ink);
-  background: var(--wfs-orange);
-  color: var(--wfs-stock-white);
-  font-weight: 700;
-  font-variation-settings: 'wdth' 100, 'wght' 700;
-  font-size: 17px;
-  letter-spacing: -0.01em;
-  text-align: center;
-  transition: transform var(--dur-tap) var(--ease-cut);
-}
-.cta:active { transform: scale(0.98); }
-
-.chit__step {
-  margin-top: var(--s2);
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--wfs-ink-70);
-  text-align: center;
-}
-
-.chit__or {
+  gap: var(--s3);
+  align-items: flex-start;
   margin-top: var(--s5);
   padding-top: var(--s4);
-  border-top: var(--rule-hair) solid var(--wfs-ink-40);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.13em;
-  color: var(--wfs-ink-70);
-  text-align: center;
+  border-top: var(--rule-hair) solid var(--line);
+}
+.about__form-qr {
+  flex: none;
+  width: 60px;
+  height: 60px;
+  padding: 4px;
+  border: var(--rule-hair) solid var(--wfs-ink-40);
+  background: #ffffff;
+  color: var(--wfs-ink);
+}
+.about__form-qr svg { width: 100%; height: 100%; display: block; }
+.about__form-text {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--text-dim);
+}
+.about__form-text a {
+  color: var(--text);
+  font-weight: 700;
+  border-bottom: var(--rule-hair) solid var(--accent);
 }
 
 /* --- 11. Go --------------------------------------------------------------

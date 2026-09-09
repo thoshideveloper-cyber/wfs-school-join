@@ -12,11 +12,11 @@
    switched off — it just cannot ask which path they want first. If you
    change a link here, change it there too.
 
-   The two Google Form links (the "Tell us your craft" / "Tell us what you
-   teach" buttons) are plain static links straight in index.html, not here —
-   they don't need a QR code or a copy fallback, so there was nothing for
-   JavaScript to wire up. To change a form, edit its `href` directly on the
-   `.cta` button in index.html.
+   The two Google Form links live below too, in FORM_LINKS. Each gets its own
+   small QR code (in the left column, next to "What you get" / "What we
+   handle") drawn the same way as the WhatsApp ones. The link text itself is
+   also hard-coded into index.html as a fallback for JavaScript-off — if you
+   change a form link here, change its `href` in index.html too.
    ========================================================================== */
 
 var LINKS = {
@@ -24,9 +24,19 @@ var LINKS = {
   teach: 'https://chat.whatsapp.com/KXw6v5TYQWSKHg8swjQQoO'    // The Weekend Film Crew
 };
 
+var FORM_LINKS = {
+  learn: 'https://docs.google.com/forms/d/e/1FAIpQLSdpRnH24970r-5Zwq8WYI8o2U5vJpVnZ1Z1SFYgEYhqgZWcxA/viewform',
+  teach: 'https://docs.google.com/forms/d/e/1FAIpQLSefMZm4ve4mkfsarF7DjXRnFBhzgi0AOFbWg-zg3KgFxbV7Iw/viewform'
+};
+
 var QR_LABELS = {
   learn: 'QR code to join The Weekend Film School on WhatsApp',
   teach: 'QR code to join The Weekend Film Crew on WhatsApp'
+};
+
+var FORM_QR_LABELS = {
+  learn: 'QR code to open the craft form',
+  teach: 'QR code to open the teaching form'
 };
 
 /* ecc: "L" | "M" | "Q" | "H". Higher survives more damage and makes a denser
@@ -61,8 +71,12 @@ var QR_ECC = 'M';
     var copy    = panel.querySelector('[data-role="copy"]');
     var urlLine = panel.querySelector('[data-role="url"]');
     var urlText = panel.querySelector('[data-role="url-text"]');
+    var formLink = FORM_LINKS[path];
+    var form     = panel.querySelector('[data-role="form"]');
+    var formQr   = panel.querySelector('[data-role="form-qr"]');
 
     if (go) go.href = link;
+    if (form) form.href = formLink;
 
     if (code && window.QR) {
       try {
@@ -71,6 +85,17 @@ var QR_ECC = 'M';
         /* A missing code is better than a broken one: hide the block and
            let the button carry the panel on its own. */
         if (qr) qr.hidden = true;
+      }
+    }
+
+    /* The small form QR sits in plain sight from the start — no reveal
+       animation, no scan caption. It's a thumbnail beside a link, not the
+       page's main event. */
+    if (formQr && window.QR) {
+      try {
+        formQr.innerHTML = window.QR.toSvg(formLink, { ecc: QR_ECC, label: FORM_QR_LABELS[path] });
+      } catch (err) {
+        formQr.hidden = true;
       }
     }
 
