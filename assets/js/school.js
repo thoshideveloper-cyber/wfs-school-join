@@ -1,7 +1,8 @@
 /* ==========================================================================
    THE WEEKEND FILM SCHOOL — JOIN SHEET
    --------------------------------------------------------------------------
-   Two links, one for each door. To change where a path sends people:
+   Two WhatsApp links, one for each door, live here. To change where a path's
+   community sends people:
      1. Open that WhatsApp community, tap its name, then Invite via link, Copy.
      2. Paste it over the matching line below. Save.
      3. That path's button AND its QR code both update. Nothing to re-export.
@@ -10,6 +11,12 @@
    in index.html, so the page still sends people somewhere with JavaScript
    switched off — it just cannot ask which path they want first. If you
    change a link here, change it there too.
+
+   The two Google Form links (the "Tell us your craft" / "Tell us what you
+   teach" buttons) are plain static links straight in index.html, not here —
+   they don't need a QR code or a copy fallback, so there was nothing for
+   JavaScript to wire up. To change a form, edit its `href` directly on the
+   `.cta` button in index.html.
    ========================================================================== */
 
 var LINKS = {

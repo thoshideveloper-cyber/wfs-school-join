@@ -375,7 +375,52 @@ main { flex: 1; }
   text-align: center;
 }
 
-/* --- 10. Go ------------------------------------------------------------- */
+/* --- 10. The form -------------------------------------------------------
+   The actual intake — what the door's blurb text ("we build the weekend
+   around it" / "we fill the room") is describing. Orange, not green: green
+   stays reserved for "this opens WhatsApp" everywhere else on the page. */
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  margin-top: var(--s5);
+  padding: var(--s3) var(--s5);
+  border: var(--rule-hair) solid var(--wfs-ink);
+  background: var(--wfs-orange);
+  color: var(--wfs-stock-white);
+  font-weight: 700;
+  font-variation-settings: 'wdth' 100, 'wght' 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  text-align: center;
+  transition: transform var(--dur-tap) var(--ease-cut);
+}
+.cta:active { transform: scale(0.98); }
+
+.chit__step {
+  margin-top: var(--s2);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--wfs-ink-70);
+  text-align: center;
+}
+
+.chit__or {
+  margin-top: var(--s5);
+  padding-top: var(--s4);
+  border-top: var(--rule-hair) solid var(--wfs-ink-40);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--wfs-ink-70);
+  text-align: center;
+}
+
+/* --- 11. Go --------------------------------------------------------------
+   Always green, always "this opens WhatsApp" — the one colour on this page
+   that means one specific thing, everywhere it appears. */
 .go {
   display: flex;
   align-items: center;
@@ -436,7 +481,7 @@ main { flex: 1; }
 }
 .ast { margin-right: 6px; font-weight: 700; }
 
-/* --- 11. What you get / what we handle ----------------------------------
+/* --- 12. What you get / what we handle ----------------------------------
    A short numbered list per path — the poster's numbered points, without
    the poster's density. Squares, not circles: zero radius stays the rule. */
 .about__h {
@@ -487,7 +532,7 @@ main { flex: 1; }
   border-bottom: var(--rule-hair) solid var(--accent);
 }
 
-/* --- 12. Footer --------------------------------------------------------- */
+/* --- 13. Footer --------------------------------------------------------- */
 .foot {
   display: flex;
   flex-wrap: wrap;
