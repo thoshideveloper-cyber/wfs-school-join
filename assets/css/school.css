@@ -19,15 +19,16 @@
   --wfs-stock-green:     #C6DEC6;
   --wfs-stock-goldenrod: #EFD27A;
   --wfs-stock-cherry:    #E9AEB2;
-  --wfs-green:           #17693F;   /* the green light, on paper only */
-  --wfs-green-hi:        #3FBF77;   /* on ink surfaces only */
+  --wfs-green:           #17693F;   /* the "go" button. Always this shade —
+                                        it never flips with the theme. */
+  --wfs-orange:          #FF4B1F;   /* the mark's second colour. Also fixed. */
 
   /* Semantic. Reassigned wholesale for the ink surface further down. */
   --surface:  var(--wfs-stock-white);
   --text:     var(--wfs-ink);
   --text-dim: var(--wfs-ink-70);
   --line:     var(--wfs-ink);
-  --accent:   var(--wfs-green);
+  --accent:   var(--wfs-orange);
 
   --font-display: "Archivo", "Segoe UI", system-ui, sans-serif;
   --font-body:    "Archivo", "Segoe UI", system-ui, sans-serif;
@@ -60,7 +61,8 @@
     --text:     var(--wfs-stock-white);
     --text-dim: var(--wfs-ink-40);
     --line:     var(--wfs-stock-white);
-    --accent:   var(--wfs-green-hi);
+    /* --accent stays the fixed orange from :root — it is the mark's own
+       colour, not a UI colour, so it does not flip with the theme. */
   }
 }
 
@@ -513,3 +515,23 @@ main { flex: 1; }
   transition: color var(--dur-ui) var(--ease-cut), border-color var(--dur-ui) var(--ease-cut);
 }
 .foot__nav a:hover { color: var(--text); border-color: var(--accent); }
+
+/* The four words from the poster's right-hand rail. A small stack, not a
+   fourth navigation — that's why it isn't a list of links. */
+.foot__tags {
+  display: flex;
+  gap: var(--s2) var(--s4);
+  flex-wrap: wrap;
+  padding-left: var(--s4);
+  border-left: var(--rule-hair) solid var(--line);
+}
+.foot__tags span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--text-dim);
+}
+@media (min-width: 620px) {
+  .foot__tags { flex-direction: column; gap: var(--s1); }
+}

@@ -36,24 +36,13 @@
 
   <header class="mast">
     <a class="mast__mark" href="https://www.thenobodyclub.com/filmschool/" aria-label="The Weekend Film School">
-      <!-- brand/logo/wfs-mark-mono-ink.svg, recoloured to currentColor so one
-           copy serves both the paper and the ink surface. Geometry untouched. -->
-      <svg viewBox="0 0 1000 1000" aria-hidden="true" focusable="false">
-        <g fill="none" stroke="currentColor" stroke-width="52">
-          <path d="M 651.54 134.14 A 396 396 0 0 1 814.17 741.07"/>
-          <path d="M 741.07 814.17 A 396 396 0 0 1 448.31 892.61"/>
-          <path d="M 348.46 865.86 A 396 396 0 0 1 134.14 348.46"/>
-          <path d="M 185.83 258.93 A 396 396 0 0 1 551.69 107.39"/>
-        </g>
-        <g stroke="currentColor" stroke-width="20">
-          <line x1="191.69" y1="322" x2="108.56" y2="274"/>
-          <line x1="592.14" y1="156.13" x2="616.99" y2="63.40"/>
-          <line x1="751.73" y1="751.73" x2="819.61" y2="819.61"/>
-          <line x1="407.86" y1="843.87" x2="383.01" y2="936.60"/>
-        </g>
-        <rect x="334" y="640" width="332" height="18" fill="currentColor"/>
-        <text x="500" y="618" text-anchor="middle" fill="currentColor" font-family="Archivo"
-              font-weight="900" font-size="540" style="font-variation-settings:'wdth' 125">1</text>
+      <!-- The mark: a W cut from a solid block, printed a beat late over its
+           own orange plate — two days, out of register on purpose. Black
+           half uses currentColor so it flips white on the ink surface; the
+           orange plate is fixed, same in both themes. -->
+      <svg viewBox="0 0 112 112" aria-hidden="true" focusable="false">
+        <rect x="30" y="30" width="74" height="74" fill="var(--wfs-orange)"/>
+        <path d="M6,6 L20,6 L29,55 L38,6 L48,6 L57,55 L66,6 L80,6 L80,80 L6,80 Z" fill="currentColor"/>
       </svg>
       <span class="mast__name">The Weekend Film School</span>
     </a>
@@ -160,12 +149,15 @@
   </main>
 
   <footer class="foot">
-    <p class="foot__line">The Weekend Film School, Hyderabad. Part of The Nobody Club.</p>
-    <nav class="foot__nav" aria-label="Elsewhere">
-      <a href="https://www.thenobodyclub.com/filmschool/" rel="noopener">Site</a>
-      <a href="https://instagram.com/theweekendfilmschool" rel="noopener">Instagram</a>
-      <a href="https://www.thenobodyclub.com" rel="noopener">The Nobody Club</a>
-    </nav>
+    <div>
+      <p class="foot__line">The Weekend Film School, Hyderabad. Part of The Nobody Club.</p>
+      <nav class="foot__nav" aria-label="Elsewhere">
+        <a href="https://www.thenobodyclub.com/filmschool/" rel="noopener">Site</a>
+        <a href="https://instagram.com/theweekendfilmschool" rel="noopener">Instagram</a>
+        <a href="https://www.thenobodyclub.com" rel="noopener">The Nobody Club</a>
+      </nav>
+    </div>
+    <p class="foot__tags"><span>Films</span><span>People</span><span>Ideas</span><span>Weekends</span></p>
   </footer>
 
 </div>
